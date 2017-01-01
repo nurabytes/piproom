@@ -1,0 +1,12 @@
+{
+  "name": "PIPROOM",
+  "description": "Live Trading Room Focussing On FX, Equities and Commodities",
+  "version": "0.0.1",
+  "private": "true",
+  "dependencies": {
+    "express": "4.14.x",
+    "semantic-ui": "^2.2.7",
+    "socket.io": "1.7.x",
+    "redis" : "latest"
+  }
+}
