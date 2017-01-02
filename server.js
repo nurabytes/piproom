@@ -6,59 +6,51 @@ var io = require('socket.io').listen(server);
 users = [];
 connections = [];
 
-server.listen(process.env.PORT || 3002);
+server.listen(process.env.PORT || 3002  );
 console.log('Server running...');
 
-app.use('/semantic', express.static(__dirname + '/semantic'));
-app.use('/css', express.static(__dirname + '/css'));
-app.use('/js', express.static(__dirname + '/js'));
+app.use('/semantic',express.static(__dirname + '/semantic'));
+app.use('/css',express.static(__dirname + '/css'));
+app.use('/sounds',express.static(__dirname + '/sounds'));
+app.use('/js',express.static(__dirname + '/js'));
 
-app.get('/', function(req, res) {
+app.get('/room', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-io.sockets.on('connection', function(socket) {
+io.sockets.on('connection', function (socket) {
     connections.push(socket);
     console.log('Connected: %s sockets connected', connections.length);
 
-    socket.on('disconnect', function(data) {
+    socket.on('disconnect', function (data) {
         connections.splice(connections.indexOf(socket), 1);
         console.log('Disconnected: %s sockets connected', connections.length);
     });
 
-    socket.on('send figure', function(data) {
+    socket.on('send transaction', function (data) {
         console.log(data);
-        io.sockets.emit('new figure', {
-            msg: data
-        });
+        io.sockets.emit('new transaction', {msg:data});
     });
 
-    socket.on('send limit', function(data) {
+    socket.on('send currency', function (data) {
         console.log(data);
-        io.sockets.emit('new limit', {
-            msg: data
-        });
+        io.sockets.emit('new currency', {msg:data});
     });
 
-    socket.on('send stop', function(data) {
+    socket.on('send figure', function (data) {
         console.log(data);
-        io.sockets.emit('new stop', {
-            msg: data
-        });
+        io.sockets.emit('new figure', {msg:data});
     });
 
-    socket.on('send transaction', function(data) {
+    socket.on('send limit', function (data) {
         console.log(data);
-        io.sockets.emit('new transaction', {
-            msg: data
-        });
+        io.sockets.emit('new limit', {msg:data});
     });
 
-    socket.on('send currency', function(data) {
+    socket.on('send stop', function (data) {
         console.log(data);
-        io.sockets.emit('new currency', {
-            msg: data
-        });
+        io.sockets.emit('new stop', {msg:data});
     });
+
 
 });
