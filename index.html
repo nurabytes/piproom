@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 
-<body>
+<body class="hidden">
     <div class="ui text container">
         <form class="ui form" id="messageForm">
 
@@ -20,14 +20,19 @@
                         <select class="ui fluid search dropdown" id="currency">
                             <option value="EUR/USD">EUR/USD</option>
                             <option value="GBP/USD">GBP/USD</option>
-                            <option value="GBP/JPY">GBP/JPY</option>
                             <option value="USD/JPY">USD/JPY</option>
-                            <option value="EUR/GBP">EUR/GBP</option>
-                            <option value="EUR/JPY">EUR/JPY</option>
-                            <option value="AUD/JPY">AUD/JPY</option>
-                            <option value="USD/CNH">USD/CNH</option>
+                            <option value="USD/CHF">USD/CHF</option>                            
+                            <option value="USD/CAD">USD/CAD</option>                            
+                            <option value="NZD/USD">NZD/USD</option>                            
                             <option value="AUD/USD">AUD/USD</option>
-                            <option value="EUR/CHF">EUR/CHF</option>
+                            <option value="GBP/AUD">GBP/AUD</option>
+                            <option value="GBP/JPY">GBP/JPY</option>
+                            <option value="GBP/NZD">GBP/NZD</option>
+                            <option value="GBP/CAD">GBP/CAD</option>
+                            <option value="EUR/JPY">EUR/JPY</option>
+                            <option value="EUR/CAD">EUR/CAD</option>
+                            <option value="EUR/AUD">EUR/AUD</option>
+                            <option value="EUR/GBP">EUR/GBP</option>
                         </select>
                     </div>
                 </div>
@@ -72,14 +77,18 @@
         </form>
         <br>
         <div class="chat" id="chat"></div>
+        <ul id="notes"></ul>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="semantic/dist/semantic.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="js/chat.js"></script>
     <script src="js/form.js"></script>
+    <script src="js/chat.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    $("body").removeClass('hidden');
+    });
+    </script>
 </body>
-</body>
-
 </html>
-

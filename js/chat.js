@@ -47,10 +47,58 @@ $(function () {
 		$(figs).append("&nbsp;&nbsp;&nbsp;&nbsp;STOP: " +data.msg+ "</h4></center");
 		$("h4").removeAttr('id');
 		$("div").removeAttr('id');
+		$('#submit').prop("disabled", true);
 		mySound.play();
 	});
 
+	// Initial set of notes, loop through and add to list
+	socket.on('initial trans', function(data){
+    var html = ''
+    for (var i = 0; i < data.length; i++){
+        // We store html as a var then add to DOM after for efficiency
+        html += '<li>' + data[i].tran + '</li>'
+    }
+    $('#notes').append(html)
+	})
+
+		// Initial set of notes, loop through and add to list
+	socket.on('initial curs', function(data){
+    var html = ''
+    for (var i = 0; i < data.length; i++){
+        // We store html as a var then add to DOM after for efficiency
+        html += '<li>' + data[i].cur + '</li>'
+    }
+    $('#notes').append(html)
+	})
+
+		// Initial set of notes, loop through and add to list
+	socket.on('initial figs', function(data){
+    var html = ''
+    for (var i = 0; i < data.length; i++){
+        // We store html as a var then add to DOM after for efficiency
+        html += '<li>' + data[i].fig + '</li>'
+    }
+    $('#notes').append(html)
+	})
+
+		// Initial set of notes, loop through and add to list
+	socket.on('initial lmts', function(data){
+    var html = ''
+    for (var i = 0; i < data.length; i++){
+        // We store html as a var then add to DOM after for efficiency
+        html += '<li>' + data[i].lmt + '</li>'
+    }
+    $('#notes').append(html)
+	})
+
+		// Initial set of notes, loop through and add to list
+	socket.on('initial stps', function(data){
+    var html = ''
+    for (var i = 0; i < data.length; i++){
+        // We store html as a var then add to DOM after for efficiency
+        html += '<li>' + data[i].stp + '</li>'
+    }
+    $('#notes').append(html)
+	})
+
 });
-
-
-
