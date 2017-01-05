@@ -81,7 +81,7 @@ io.sockets.on('connection', function (socket) {
         db.query('INSERT INTO stps (stp) VALUES (?)', data)         
     });
 
-    if (! isInitTrans) {
+    if (isInitTrans = true) {
         db.query('SELECT * FROM trans')
             .on('result', function(data){
                 trans.push(data)
@@ -97,7 +97,7 @@ io.sockets.on('connection', function (socket) {
     }
 
 
-    if (! isInitCurs) {
+    if (isInitCurs  = true) {
         db.query('SELECT * FROM curs')
             .on('result', function(data){
                 curs.push(data)
@@ -113,7 +113,7 @@ io.sockets.on('connection', function (socket) {
     }
 
 
-    if (! isInitFigs) {
+    if (isInitFigs  = true) {
         db.query('SELECT * FROM figs')
             .on('result', function(data){
                 figs.push(data)
@@ -129,7 +129,7 @@ io.sockets.on('connection', function (socket) {
     }
 
 
-    if (! isInitLmts) {
+    if (isInitLmts  = true) {
         db.query('SELECT * FROM lmts')
             .on('result', function(data){
                 lmts.push(data)
@@ -145,7 +145,7 @@ io.sockets.on('connection', function (socket) {
     } 
 
 
-    if (! isInitStps) {
+    if (isInitStps) {
         db.query('SELECT * FROM stps')
             .on('result', function(data){
                 stps.push(data)
