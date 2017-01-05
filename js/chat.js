@@ -58,7 +58,7 @@ $(function () {
     var html = ''
     for (var i = 0; i < data.length; i++){
         // We store html as a var then add to DOM after for efficiency
-        html += '<li>' + data[i].tran + '</li>'
+        html += '<p>' + data[i].tran + '</p>'
     }
     $('#notes').append(html)
 	})
@@ -68,7 +68,7 @@ $(function () {
     var html = ''
     for (var i = 0; i < data.length; i++){
         // We store html as a var then add to DOM after for efficiency
-        html += '<li>' + data[i].cur + '</li>'
+        html += '<p>' + data[i].cur + '</p>'
     }
     $('#notes').append(html)
 	})
@@ -78,7 +78,7 @@ $(function () {
     var html = ''
     for (var i = 0; i < data.length; i++){
         // We store html as a var then add to DOM after for efficiency
-        html += '<li>' + data[i].fig + '</li>'
+        html += '<p>' + data[i].fig + '</p>'
     }
     $('#notes').append(html)
 	})
@@ -88,7 +88,7 @@ $(function () {
     var html = ''
     for (var i = 0; i < data.length; i++){
         // We store html as a var then add to DOM after for efficiency
-        html += '<li>' + data[i].lmt + '</li>'
+        html += '<p>' + data[i].lmt + '</p>'
     }
     $('#notes').append(html)
 	})
@@ -98,7 +98,7 @@ $(function () {
     var html = ''
     for (var i = 0; i < data.length; i++){
         // We store html as a var then add to DOM after for efficiency
-        html += '<li>' + data[i].stp + '</li>'
+        html += '<p>' + data[i].stp + '</p>'
     }
     $('#notes').append(html)
 	})
