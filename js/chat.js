@@ -51,6 +51,8 @@ $(function () {
 		mySound.play();
 	});
 
+// append chatlog//
+
 	// Initial set of notes, loop through and add to list
 	socket.on('initial trans', function(data){
     var html = ''

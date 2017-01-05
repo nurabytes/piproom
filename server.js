@@ -4,15 +4,15 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server)
 var mysql = require('mysql')
 var trans = []
-var isInitTrans = true
+var isInitTrans = false
 var curs = []
-var isInitCurs = true
+var isInitCurs = false
 var figs = []
-var isInitFigs = true
+var isInitFigs = false
 var stps = []
-var isInitStps = true
+var isInitStps = false
 var lmts = []
-var isInitLmts = true
+var isInitLmts = false
 
 
 users = [];
@@ -81,7 +81,7 @@ io.sockets.on('connection', function (socket) {
         db.query('INSERT INTO stps (stp) VALUES (?)', data)         
     });
 
-    if (isInitTrans === true) {
+    if (! isInitTrans) {
         db.query('SELECT * FROM trans')
             .on('result', function(data){
                 trans.push(data)
@@ -91,10 +91,13 @@ io.sockets.on('connection', function (socket) {
             })
  
         isInitTrans = true
-    } 
+    } else {
+        // Initial notes already exist, send out
+        socket.emit('initial trans', trans)
+    }
 
 
-    if (isInitCurs === true) {
+    if (! isInitCurs) {
         db.query('SELECT * FROM curs')
             .on('result', function(data){
                 curs.push(data)
@@ -104,10 +107,13 @@ io.sockets.on('connection', function (socket) {
             })
  
         isInitCurs = true
-    } 
+    } else {
+        // Initial notes already exist, send out
+        socket.emit('initial curs', curs)
+    }
 
 
-    if (isInitFigs === true) {
+    if (! isInitFigs) {
         db.query('SELECT * FROM figs')
             .on('result', function(data){
                 figs.push(data)
@@ -117,10 +123,13 @@ io.sockets.on('connection', function (socket) {
             })
  
         isInitFigs = true
-    } 
+    } else {
+        // Initial notes already exist, send out
+        socket.emit('initial figs', figs)
+    }
 
 
-    if (isInitLmts === true) {
+    if (! isInitLmts) {
         db.query('SELECT * FROM lmts')
             .on('result', function(data){
                 lmts.push(data)
@@ -130,10 +139,13 @@ io.sockets.on('connection', function (socket) {
             })
  
         isInitLmts = true
+    } else {
+        // Initial notes already exist, send out
+        socket.emit('initial lmts', lmts)
     } 
 
 
-    if (isInitStps === true) {
+    if (! isInitStps) {
         db.query('SELECT * FROM stps')
             .on('result', function(data){
                 stps.push(data)
@@ -143,6 +155,9 @@ io.sockets.on('connection', function (socket) {
             })
  
         isInitStps = true
-    } 
+    } else {
+        // Initial notes already exist, send out
+        socket.emit('initial stps', stps)
+    }
 
 });
