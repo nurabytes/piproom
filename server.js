@@ -107,68 +107,68 @@ io.sockets.on('connection', function(socket) {
     }
 
 
-    if (!isInitCurs) {
-        db.query('SELECT * FROM curs')
-            .on('result', function(data) {
-                curs.push(data)
-            })
-            .on('end', function() {
-                socket.emit('initial curs', curs)
-            })
+    // if (!isInitCurs) {
+    //     db.query('SELECT * FROM curs')
+    //         .on('result', function(data) {
+    //             curs.push(data)
+    //         })
+    //         .on('end', function() {
+    //             socket.emit('initial curs', curs)
+    //         })
 
-        isInitCurs = true
-    } else {
-        // Initial notes already exist, send out
-        socket.emit('initial curs', curs)
-    }
-
-
-    if (!isInitFigs) {
-        db.query('SELECT * FROM figs')
-            .on('result', function(data) {
-                figs.push(data)
-            })
-            .on('end', function() {
-                socket.emit('initial figs', figs)
-            })
-
-        isInitFigs = true
-    } else {
-        // Initial notes already exist, send out
-        socket.emit('initial figs', figs)
-    }
+    //     isInitCurs = true
+    // } else {
+    //     // Initial notes already exist, send out
+    //     socket.emit('initial curs', curs)
+    // }
 
 
-    if (!isInitLmts) {
-        db.query('SELECT * FROM lmts')
-            .on('result', function(data) {
-                lmts.push(data)
-            })
-            .on('end', function() {
-                socket.emit('initial lmts', lmts)
-            })
+    // if (!isInitFigs) {
+    //     db.query('SELECT * FROM figs')
+    //         .on('result', function(data) {
+    //             figs.push(data)
+    //         })
+    //         .on('end', function() {
+    //             socket.emit('initial figs', figs)
+    //         })
 
-        isInitLmts = true
-    } else {
-        // Initial notes already exist, send out
-        socket.emit('initial lmts', lmts)
-    }
+    //     isInitFigs = true
+    // } else {
+    //     // Initial notes already exist, send out
+    //     socket.emit('initial figs', figs)
+    // }
 
 
-    if (!isInitStps) {
-        db.query('SELECT * FROM stps')
-            .on('result', function(data) {
-                stps.push(data)
-            })
-            .on('end', function() {
-                socket.emit('initial stps', stps)
-            })
+    // if (!isInitLmts) {
+    //     db.query('SELECT * FROM lmts')
+    //         .on('result', function(data) {
+    //             lmts.push(data)
+    //         })
+    //         .on('end', function() {
+    //             socket.emit('initial lmts', lmts)
+    //         })
 
-        isInitStps = true
-    } else {
-        // Initial notes already exist, send out
-        socket.emit('initial stps', stps)
-    }
+    //     isInitLmts = true
+    // } else {
+    //     // Initial notes already exist, send out
+    //     socket.emit('initial lmts', lmts)
+    // }
+
+
+    // if (!isInitStps) {
+    //     db.query('SELECT * FROM stps')
+    //         .on('result', function(data) {
+    //             stps.push(data)
+    //         })
+    //         .on('end', function() {
+    //             socket.emit('initial stps', stps)
+    //         })
+
+    //     isInitStps = true
+    // } else {
+    //     // Initial notes already exist, send out
+    //     socket.emit('initial stps', stps)
+    // }
 
 
 });
