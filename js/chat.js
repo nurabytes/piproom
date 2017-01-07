@@ -7,9 +7,11 @@ $(function() {
     var $transaction = $('#transaction');
     var $currency = $('#currency');
     var $chat = $('#chat');
+    var $history = $('#history');    
     var $pipbox = $('#pipbox');
     var $transac = $('#transac');
     var mySound = new Audio('/sounds/bell.mp3');
+    var ids = [];
     mySound.load();
 
 
@@ -51,57 +53,38 @@ $(function() {
         mySound.play();
     });
 
-    ////
 
 
-    // Initial set of notes, loop through and add to list
-    socket.on('initial trans', function(data) {
-        var html = ''
+    socket.on('initial trans', function(data) {     
         for (var i = 0; i < data.length; i++) {
-            // We store html as a var then add to DOM after for efficiency
-            html += '<p>' + data[i].tran + '</p>'
+        $('#history').prepend('<div id="' + data[i].id + '"' + 'style="margin-bottom: 0.8em;" class="ui blue inverted link relaxed segment">' + '<h2 id="' + 't' + data[i].id + '"' + 'class="ui center aligned header">' + data[i].tran + "&nbsp;&nbsp;" + '</h2>' + '</div>');            
         }
-        $('#notes').append(html)
     })
 
-    // // Initial set of notes, loop through and add to list
-    // socket.on('initial curs', function(data) {
-    //     var html = ''
-    //     for (var i = 0; i < data.length; i++) {
-    //         // We store html as a var then add to DOM after for efficiency
-    //         html += '<p>' + data[i].cur + '</p>'
-    //     }
-    //     $('#notes').append(html)
-    // })
 
-    // // Initial set of notes, loop through and add to list
-    // socket.on('initial figs', function(data) {
-    //     var html = ''
-    //     for (var i = 0; i < data.length; i++) {
-    //         // We store html as a var then add to DOM after for efficiency
-    //         html += '<p>' + data[i].fig + '</p>'
-    //     }
-    //     $('#notes').append(html)
-    // })
+    socket.on('initial curs', function(data) {
+        for (var i = 0; i < data.length; i++) {
+        $('#t'+data[i].id).append(data[i].cur + "&nbsp;&nbsp;");          
+        }
+    })
 
-    // // Initial set of notes, loop through and add to list
-    // socket.on('initial lmts', function(data) {
-    //     var html = ''
-    //     for (var i = 0; i < data.length; i++) {
-    //         // We store html as a var then add to DOM after for efficiency
-    //         html += '<p>' + data[i].lmt + '</p>'
-    //     }
-    //     $('#notes').append(html)
-    // })
 
-    // // Initial set of notes, loop through and add to list
-    // socket.on('initial stps', function(data) {
-    //     var html = ''
-    //     for (var i = 0; i < data.length; i++) {
-    //         // We store html as a var then add to DOM after for efficiency
-    //         html += '<p>' + data[i].stp + '</p>'
-    //     }
-    //     $('#notes').append(html)
-    // })
+    socket.on('initial figs', function(data) {
+        for (var i = 0; i < data.length; i++) {
+            $('#'+data[i].id).append("<center>" + '<h4 id="' + 'f' + data[i].id + '">' + "ENTRY: " + data[i].fig);
+        }
+    })
 
-});
+    socket.on('initial lmts', function(data) {
+        for (var i = 0; i < data.length; i++) {
+            $('#f'+data[i].id).append("&nbsp;&nbsp;&nbsp;&nbsp;LIMIT: " + data[i].lmt);  
+        }
+    })
+
+    socket.on('initial stps', function(data) {
+        for (var i = 0; i < data.length; i++) {
+            $('#f'+data[i].id).append("&nbsp;&nbsp;&nbsp;&nbsp;LIMIT: " + data[i].stp + "</h4></center"); 
+        }
+    })
+
+})
