@@ -54,7 +54,6 @@ $(function() {
     });
 
 
-
     socket.on('initial trans', function(data) {     
         for (var i = 0; i < data.length; i++) {
         $('#history').prepend('<div id="' + data[i].id + '"' + 'style="margin-bottom: 0.8em;" class="ui blue inverted link relaxed segment">' + '<h2 id="' + 't' + data[i].id + '"' + 'class="ui center aligned header">' + data[i].tran + "&nbsp;&nbsp;" + '</h2>' + '</div>');            
