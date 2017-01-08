@@ -29,17 +29,16 @@ $(function() {
 
 
     socket.on('new transaction', function(data) {
-        $chat.prepend('<div id="pipbox" style="margin-bottom: 0.8em;" class="ui blue inverted link relaxed segment">' + "<h2 id='transac' class='ui center aligned header'>" + data.msg + "&nbsp;&nbsp;" + "</h2>" + '</div>');
+        $chat.prepend('<div id="pipbox" style="margin-bottom: 0.8em;" class="ui blue inverted link relaxed segment">' + "<h1 id='transac' class='ui center aligned header'>" + data.msg + "&nbsp;&nbsp;" + "</h1>" + '</div>');
     });
 
     socket.on('new currency', function(data) {
         $(transac).append(data.msg);
         $("h2").removeAttr('id');
-        moment().format('MMMM Do YYYY, h:mm:ss a');
     });
 
     socket.on('new figure', function(data) {
-        $(pipbox).append("<center><h4 id='figs'>" + "ENTRY: " + data.msg);
+        $(pipbox).append("<center><h3 id='figs'>" + "ENTRY: " + data.msg);
     });
 
     socket.on('new limit', function(data) {
@@ -47,7 +46,7 @@ $(function() {
     });
 
     socket.on('new stop', function(data) {
-        $(figs).append("&nbsp;&nbsp;&nbsp;&nbsp;STOP: " + data.msg + "</h4><h5 id='time'>" + moment().format('MMMM Do YYYY, h:mm:ss a') + "</h5></center>");
+        $(figs).append("&nbsp;&nbsp;&nbsp;&nbsp;STOP: " + data.msg + "</h3>" + "<h5 id='time'>" + moment().format('MMMM Do YYYY, h:mm:ss a') + "</h5></center>");
         $("h4").removeAttr('id');
         $("div").removeAttr('id');
         $('#submit').prop("disabled", true);
