@@ -10,3 +10,7 @@ h4 {
 .hidden {
 	display: none;
 }	
+
+#time {
+	padding-top: 15px;
+}
