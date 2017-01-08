@@ -4,15 +4,11 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var mysql = require('mysql');
 var trans = [];
-var isInitTrans = false;
 var curs = [];
-var isInitCurs = false;
 var figs = [];
-var isInitFigs = false;
 var stps = [];
-var isInitStps = false;
 var lmts = [];
-var isInitLmts = false;
+var times = [];
 
 
 users = [];
@@ -49,6 +45,14 @@ io.sockets.on('connection', function(socket) {
     socket.on('disconnect', function(data) {
         connections.splice(connections.indexOf(socket), 1);
         console.log('Disconnected: %s sockets connected', connections.length);
+    });
+
+    socket.on('send time', function(data) {
+        console.log(data);
+        io.sockets.emit('new time', {
+            msg: data
+        });
+        db.query('INSERT INTO times (time) VALUES (?)', data)
     });
 
     socket.on('send transaction', function(data) {
@@ -91,6 +95,7 @@ io.sockets.on('connection', function(socket) {
         db.query('INSERT INTO stps (stp) VALUES (?)', data)
     });
 
+
     db.query('SELECT * FROM trans')
         .on('result', function(data) {
             trans.push(data);
@@ -130,4 +135,11 @@ io.sockets.on('connection', function(socket) {
             stps.pop(data)
         });
 
+    db.query('SELECT * FROM times')
+    .on('result', function(data) {
+        times.push(data);
+        socket.emit('initial times', times);
+        times.pop(data);
+    });
+        
 });
