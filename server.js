@@ -2,6 +2,9 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var session = require('express-session')
 var mysql = require('mysql');
 var trans = [];
 var curs = [];
@@ -9,6 +12,79 @@ var figs = [];
 var stps = [];
 var lmts = [];
 var times = [];
+
+app.use(bodyParser());
+app.use(cookieParser('shhhh, very secret'));
+app.use(session());
+
+
+//// ADMIN LOGIN
+
+function restrictAdmin(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    req.session.error = 'Access denied!';
+    res.redirect('/admin-login');
+  }
+}
+
+app.post('/admin-login', function(request, response) {
+ 
+    var username = request.body.username;
+    var password = request.body.password;
+ 
+    if(username == 'pipmaster' && password == 'pipmaster@2017'){
+        request.session.regenerate(function(){
+        request.session.user = username;
+        response.redirect('/admin');
+        });
+    }
+    else {
+       response.redirect('admin-login');
+    }    
+});
+
+app.get('/admin-logout', function(request, response){
+    request.session.destroy(function(){
+        response.redirect('/admin-login');
+    });
+});
+
+
+// USER LOGIN
+
+function restrict(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    req.session.error = 'Access denied!';
+    res.redirect('/login');
+  }
+}
+
+app.post('/login', function(request, response) {
+ 
+    var username = request.body.username;
+    var password = request.body.password;
+ 
+    if(username in {priority1:1, priority2:1, priority3:1, priority4:1, priority5:1, priority6:1, priority7:1, priority8:1, priority9:1, priority10:1} 
+        && password in {priority01:1, priority02:1, priority03:1, priority04:1, priority05:1, priority06:1, priority07:1, priority08:1, priority09:1, priority010:1}){
+        request.session.regenerate(function(){
+        request.session.user = username;
+        response.redirect('/room');
+        });
+    }
+    else {
+       response.redirect('login');
+    }    
+});
+
+app.get('/logout', function(request, response){
+    request.session.destroy(function(){
+        response.redirect('/login');
+    });
+});
 
 
 users = [];
@@ -34,8 +110,20 @@ app.use('/css', express.static(__dirname + '/css'));
 app.use('/sounds', express.static(__dirname + '/sounds'));
 app.use('/js', express.static(__dirname + '/js'));
 
-app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html');
+app.get('/admin', restrictAdmin, function(req, res) {
+    res.sendFile(__dirname + '/admin.html');
+});
+
+app.get('/room', restrict, function(req, res) {
+    res.sendFile(__dirname + '/room.html');
+});
+
+app.get('/admin-login', function(req, res) {
+    res.sendFile(__dirname + '/admin-login.html');
+});
+
+app.get('/login', function(req, res) {
+    res.sendFile(__dirname + '/login.html');
 });
 
 io.sockets.on('connection', function(socket) {
