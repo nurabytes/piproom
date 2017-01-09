@@ -102,13 +102,23 @@ db.connect(function(err) {
 });
 
 
-server.listen(process.env.PORT || 3000);
+server.listen(process.env.PORT || 3001);
 console.log('Server running...');
 
 app.use('/semantic', express.static(__dirname + '/semantic'));
 app.use('/css', express.static(__dirname + '/css'));
 app.use('/sounds', express.static(__dirname + '/sounds'));
 app.use('/js', express.static(__dirname + '/js'));
+app.use('/fonts', express.static(__dirname + '/fonts'));
+app.use('/img', express.static(__dirname + '/img'));
+
+app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/landing.html');
+});
+
+app.get('/landing', function(req, res) {
+    res.sendFile(__dirname + '/landing.html');
+});
 
 app.get('/admin', restrictAdmin, function(req, res) {
     res.sendFile(__dirname + '/admin.html');
