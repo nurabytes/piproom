@@ -193,6 +193,15 @@ io.sockets.on('connection', function(socket) {
         db.query('INSERT INTO stps (stp) VALUES (?)', data)
     });
 
+    socket.on('clear history', function(data) {
+        io.sockets.emit('new stop',
+        db.query('TRUNCATE TABLE curs')
+        db.query('TRUNCATE TABLE figs')
+        db.query('TRUNCATE TABLE lmts')
+        db.query('TRUNCATE TABLE stps')
+        db.query('TRUNCATE TABLE times')
+        db.query('TRUNCATE TABLE trans')        
+    });
 
     db.query('SELECT * FROM trans')
         .on('result', function(data) {

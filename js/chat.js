@@ -14,6 +14,9 @@ $(function() {
     var ids = [];
     mySound.load();
 
+    $( "#delete" ).click(function() {
+        socket.emit('clear history');
+    });
 
     $messageForm.submit(function(e) {
         e.preventDefault();
