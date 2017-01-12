@@ -14,9 +14,7 @@ $(function() {
     var ids = [];
     mySound.load();
 
-    $( "#delete" ).click(function() {
-        $( ".chat" ).empty();
-        $( ".history" ).empty();        
+    $( "#delete" ).click(function() {      
         socket.emit('clear history');
     });
 
@@ -44,7 +42,7 @@ $(function() {
 
     socket.on('new currency', function(data) {
         $(transac).append(data.msg);
-        $("h2").removeAttr('id');
+        $("h1").removeAttr('id');
     });
 
     socket.on('new figure', function(data) {
@@ -57,7 +55,7 @@ $(function() {
 
     socket.on('new stop', function(data) {
         $(figs).append("&nbsp;&nbsp;&nbsp;&nbsp;STOP: " + data.msg + "</h3>" + "<h5 id='time'>" + moment().format('MMMM Do YYYY, h:mm:ss a') + "</h5></center>" + "</center>");
-        $("h4").removeAttr('id');
+        $("h3").removeAttr('id');
         $("div").removeAttr('id');
         $('#submit').prop("disabled", true);
         mySound.play();
