@@ -15,6 +15,8 @@ $(function() {
     mySound.load();
 
     $( "#delete" ).click(function() {
+        $( ".chat" ).empty();
+        $( ".history" ).empty();        
         socket.emit('clear history');
     });
 
