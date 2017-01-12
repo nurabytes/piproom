@@ -102,7 +102,7 @@ db.connect(function(err) {
 });
 
 
-server.listen(process.env.PORT || 80);
+server.listen(process.env.PORT || 3001);
 console.log('Server running...');
 
 app.use('/semantic', express.static(__dirname + '/semantic'));
@@ -194,6 +194,7 @@ io.sockets.on('connection', function(socket) {
     });
 
     socket.on('clear history', function(data) {
+        io.sockets.emit('delete history')
         db.query('TRUNCATE TABLE curs');
         db.query('TRUNCATE TABLE figs');
         db.query('TRUNCATE TABLE lmts');
