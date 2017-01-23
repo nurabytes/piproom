@@ -94,7 +94,7 @@ connections = [];
 var db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'bluestork3308',
+    password: 'BlueStork3308',
     database: 'piproom'
 });
 
@@ -103,7 +103,7 @@ db.connect(function(err) {
 });
 
 
-server.listen(process.env.PORT || 80);
+server.listen(process.env.PORT || 3001);
 console.log('Server running...');
 
 app.use('/semantic', express.static(__dirname + '/semantic'));
