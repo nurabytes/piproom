@@ -47,7 +47,7 @@ $(function() {
     });    
 
     socket.on('new transaction', function(data) {
-        $chat.prepend('<div id="pipbox" style="margin-bottom: 0.8em;" class="ui inverted link relaxed segment">' + "<h1 id='transac' class='ui center aligned header'>" + data.msg + "&nbsp;&nbsp;" + "</h1>" + '</div>');
+        $chat.prepend('<div id="pipbox" style="margin-bottom: 0.8em;" class="ui inverted link relaxed segment ">' + "<h1 id='transac' class='ui center aligned header'>" + data.msg + "&nbsp;&nbsp;" + "</h1>" + '</div>');
     });
 
 
