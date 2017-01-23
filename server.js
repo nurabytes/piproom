@@ -19,8 +19,6 @@ app.use(cookieParser('shhhh, very secret'));
 app.use(session());
 
 
-// ADMIN LOGIN
-
 function restrictAdmin(req, res, next) {
   if (req.session.user) {
     next();
@@ -53,8 +51,6 @@ app.get('/admin-logout', function(request, response){
 });
 
 
-USER LOGIN
-
 function restrict(req, res, next) {
   if (req.session.user) {
     next();
@@ -69,8 +65,8 @@ app.post('/login', function(request, response) {
     var username = request.body.username;
     var password = request.body.password;
  
-    if(username in {priority1:1, priority2:1, priority3:1, priority4:1, priority5:1, priority6:1, priority7:1, priority8:1, priority9:1, priority10:1} 
-        && password in {priority01:1, priority02:1, priority03:1, priority04:1, priority05:1, priority06:1, priority07:1, priority08:1, priority09:1, priority010:1}){
+    if(username in {pr1:1, pr2:1, pr3:1, pr4:1, pr5:1, pr6:1, pr7:1, pr8:1, pr9:1, pr10:1, pr11:1, pr12:1, pr13:1, pr14:1, pr15:1, pr16:1, pr17:1, pr18:1, pr19:1, pr20:1} 
+        && password in {1234:1}){
         request.session.regenerate(function(){
         request.session.user = username;
         response.redirect('/room');
