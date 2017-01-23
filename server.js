@@ -11,6 +11,7 @@ var curs = [];
 var figs = [];
 var stps = [];
 var lmts = [];
+var clrs = [];
 var times = [];
 
 app.use(bodyParser());
@@ -20,36 +21,36 @@ app.use(session());
 
 //// ADMIN LOGIN
 
-function restrictAdmin(req, res, next) {
-  if (req.session.user) {
-    next();
-  } else {
-    req.session.error = 'Access denied!';
-    res.redirect('/admin-login');
-  }
-}
+// function restrictAdmin(req, res, next) {
+//   if (req.session.user) {
+//     next();
+//   } else {
+//     req.session.error = 'Access denied!';
+//     res.redirect('/admin-login');
+//   }
+// }
 
-app.post('/admin-login', function(request, response) {
+// app.post('/admin-login', function(request, response) {
  
-    var username = request.body.username;
-    var password = request.body.password;
+//     var username = request.body.username;
+//     var password = request.body.password;
  
-    if(username == 'pipmaster' && password == 'pipmaster@2017'){
-        request.session.regenerate(function(){
-        request.session.user = username;
-        response.redirect('/admin');
-        });
-    }
-    else {
-       response.redirect('admin-login');
-    }    
-});
+//     if(username == 'pipmaster' && password == 'pipmaster@2017'){
+//         request.session.regenerate(function(){
+//         request.session.user = username;
+//         response.redirect('/admin');
+//         });
+//     }
+//     else {
+//        response.redirect('admin-login');
+//     }    
+// });
 
-app.get('/admin-logout', function(request, response){
-    request.session.destroy(function(){
-        response.redirect('/admin-login');
-    });
-});
+// app.get('/admin-logout', function(request, response){
+//     request.session.destroy(function(){
+//         response.redirect('/admin-login');
+//     });
+// });
 
 
 // USER LOGIN
@@ -93,7 +94,7 @@ connections = [];
 var db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'bluestork3308',
+    password: 'BlueStork3308',
     database: 'piproom'
 });
 
@@ -120,9 +121,13 @@ app.get('/landing', function(req, res) {
     res.sendFile(__dirname + '/landing.html');
 });
 
-app.get('/admin', restrictAdmin, function(req, res) {
+app.get('/admin', function(req, res) {
     res.sendFile(__dirname + '/admin.html');
 });
+
+// app.get('/admin', restrictAdmin, function(req, res) {
+//     res.sendFile(__dirname + '/admin.html');
+// });
 
 app.get('/room', restrict, function(req, res) {
     res.sendFile(__dirname + '/room.html');
@@ -144,6 +149,7 @@ io.sockets.on('connection', function(socket) {
         connections.splice(connections.indexOf(socket), 1);
         console.log('Disconnected: %s sockets connected', connections.length);
     });
+    
 
     socket.on('send time', function(data) {
         console.log(data);
@@ -161,6 +167,7 @@ io.sockets.on('connection', function(socket) {
         db.query('INSERT INTO trans (tran) VALUES (?)', data)
     });
 
+
     socket.on('send currency', function(data) {
         console.log(data);
         io.sockets.emit('new currency', {
@@ -168,6 +175,14 @@ io.sockets.on('connection', function(socket) {
         });
         db.query('INSERT INTO curs (cur) VALUES (?)', data)
     });
+
+        socket.on('send color', function(data) {
+        console.log(data);
+        io.sockets.emit('new color', {
+            msg: data
+        });
+        db.query('INSERT INTO colors (color) VALUES (?)', data)
+    });    
 
     socket.on('send figure', function(data) {
         console.log(data);
@@ -200,8 +215,16 @@ io.sockets.on('connection', function(socket) {
         db.query('TRUNCATE TABLE stps');
         db.query('TRUNCATE TABLE times');
         db.query('TRUNCATE TABLE trans');
+        db.query('TRUNCATE TABLE colors')
         io.sockets.emit('delete history')    
     });
+
+    socket.on('change color', function() {
+        db.query('UPDATE colors SET color=""');
+        io.sockets.emit('modify color');
+
+    });
+
 
     db.query('SELECT * FROM trans')
         .on('result', function(data) {
@@ -217,6 +240,14 @@ io.sockets.on('connection', function(socket) {
             socket.emit('initial curs', curs)
             curs.pop(data)
         });
+
+
+    db.query('SELECT * FROM colors')
+        .on('result', function(data) {
+            clrs.push(data)
+            socket.emit('initial clrs', clrs)
+            clrs.pop(data)
+        });        
 
 
     db.query('SELECT * FROM figs')

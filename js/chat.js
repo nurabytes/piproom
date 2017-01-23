@@ -12,17 +12,23 @@ $(function() {
     var $transac = $('#transac');
     var mySound = new Audio('/sounds/bell.mp3');
     var ids = [];
+    var color = 'blue';
     mySound.load();
 
     $( "#delete" ).click(function() {      
         socket.emit('clear history');
     });
 
+    $( "#color" ).click(function() {      
+        socket.emit('change color');
+    });    
+
     $messageForm.submit(function(e) {
         e.preventDefault();
         socket.emit('send time', moment().format('MMMM Do YYYY, h:mm:ss a') );
         socket.emit('send transaction', $transaction.val());
         socket.emit('send currency', $currency.val());
+        socket.emit('send color', color);
         socket.emit('send figure', $figure.val());
         $figure.val('');
         socket.emit('send limit', $limit.val());
@@ -33,17 +39,26 @@ $(function() {
 
     socket.on('delete history', function() {
         $( ".chat" ).empty();
-        $( ".history" ).empty();
+        $( ".history" ).empty();        
     });
 
+    socket.on('modify color', function() {
+        $('.blue').removeClass('blue');
+    });    
+
     socket.on('new transaction', function(data) {
-        $chat.prepend('<div id="pipbox" style="margin-bottom: 0.8em;" class="ui blue inverted link relaxed segment">' + "<h1 id='transac' class='ui center aligned header'>" + data.msg + "&nbsp;&nbsp;" + "</h1>" + '</div>');
+        $chat.prepend('<div id="pipbox" style="margin-bottom: 0.8em;" class="ui inverted link relaxed segment">' + "<h1 id='transac' class='ui center aligned header'>" + data.msg + "&nbsp;&nbsp;" + "</h1>" + '</div>');
     });
+
 
     socket.on('new currency', function(data) {
         $(transac).append(data.msg);
         $("h1").removeAttr('id');
     });
+
+    socket.on('new color', function(data) {
+        $(pipbox).addClass(data.msg);
+    });    
 
     socket.on('new figure', function(data) {
         $(pipbox).append("<center><h3 id='figs'>" + "ENTRY: " + data.msg);
@@ -64,7 +79,7 @@ $(function() {
 
     socket.on('initial trans', function(data) {     
         for (var i = 0; i < data.length; i++) {
-        $('#history').prepend('<div id="' + data[i].id + '"' + 'style="margin-bottom: 0.8em;" class="ui blue inverted link relaxed segment">' + '<h1 id="' + 't' + data[i].id + '"' + 'class="ui center aligned header">' + data[i].tran + "&nbsp;&nbsp;" + '</h1>' + '</div>');            
+        $('#history').prepend('<div id="' + data[i].id + '"' + 'style="margin-bottom: 0.8em;" class="ui inverted link relaxed segment ">' + '<h1 id="' + 't' + data[i].id + '"' + 'class="ui center aligned header">' + data[i].tran + "&nbsp;&nbsp;" + '</h1>' + '</div>');            
         }
     })
 
@@ -75,6 +90,11 @@ $(function() {
         }
     })
 
+    socket.on('initial clrs', function(data) {
+        for (var i = 0; i < data.length; i++) {
+        $('#' + data[i].id).addClass(data[i].color);          
+        }
+    })
 
     socket.on('initial figs', function(data) {
         for (var i = 0; i < data.length; i++) {
