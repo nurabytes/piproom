@@ -19,41 +19,41 @@ app.use(cookieParser('shhhh, very secret'));
 app.use(session());
 
 
-//// ADMIN LOGIN
+// ADMIN LOGIN
 
-// function restrictAdmin(req, res, next) {
-//   if (req.session.user) {
-//     next();
-//   } else {
-//     req.session.error = 'Access denied!';
-//     res.redirect('/admin-login');
-//   }
-// }
+function restrictAdmin(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    req.session.error = 'Access denied!';
+    res.redirect('/admin-login');
+  }
+}
 
-// app.post('/admin-login', function(request, response) {
+app.post('/admin-login', function(request, response) {
  
-//     var username = request.body.username;
-//     var password = request.body.password;
+    var username = request.body.username;
+    var password = request.body.password;
  
-//     if(username == 'pipmaster' && password == 'pipmaster@2017'){
-//         request.session.regenerate(function(){
-//         request.session.user = username;
-//         response.redirect('/admin');
-//         });
-//     }
-//     else {
-//        response.redirect('admin-login');
-//     }    
-// });
+    if(username == 'pipmaster' && password == 'pipmaster@2017'){
+        request.session.regenerate(function(){
+        request.session.user = username;
+        response.redirect('/admin');
+        });
+    }
+    else {
+       response.redirect('admin-login');
+    }    
+});
 
-// app.get('/admin-logout', function(request, response){
-//     request.session.destroy(function(){
-//         response.redirect('/admin-login');
-//     });
-// });
+app.get('/admin-logout', function(request, response){
+    request.session.destroy(function(){
+        response.redirect('/admin-login');
+    });
+});
 
 
-// USER LOGIN
+USER LOGIN
 
 function restrict(req, res, next) {
   if (req.session.user) {
@@ -94,7 +94,7 @@ connections = [];
 var db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'BlueStork3308',
+    password: 'bluestork3308',
     database: 'piproom'
 });
 
@@ -103,7 +103,7 @@ db.connect(function(err) {
 });
 
 
-server.listen(process.env.PORT || 3001);
+server.listen(process.env.PORT || 80);
 console.log('Server running...');
 
 app.use('/semantic', express.static(__dirname + '/semantic'));
@@ -122,13 +122,10 @@ app.get('/landing', function(req, res) {
     res.sendFile(__dirname + '/landing.html');
 });
 
-app.get('/admin', function(req, res) {
+
+app.get('/admin', restrictAdmin, function(req, res) {
     res.sendFile(__dirname + '/admin.html');
 });
-
-// app.get('/admin', restrictAdmin, function(req, res) {
-//     res.sendFile(__dirname + '/admin.html');
-// });
 
 app.get('/room', restrict, function(req, res) {
     res.sendFile(__dirname + '/room.html');
