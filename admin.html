@@ -9,17 +9,20 @@
 </head>
 
 <body class="hidden">
+<!-- moment.tz('Europe/London').format('MMMM Do YYYY, h:mm:ss a') -->
 
-    <div class="container">
-    <a href="/admin-logout" class="ui right floated button">LOGOUT</a>
+    <div class="ui text container timex">
+    <h5 class="ui right floated header" id="timex"></h5>
+    </div>
+
+    <div class="ui text container options">
+    <a href="/admin-logout" class="ui right floated button">Logout</a>
     <button class="ui red right floated button" id="delete">Clear History</button>
     <button class="ui green right floated button" id="color">Close Trades</button>  
     </div>
 
-
     <div class="ui text container">
 
-        <!-- <a >LOGOUT</a> -->
         <form class="ui form" id="messageForm">
 
             <div class="fields">
@@ -94,20 +97,26 @@
         <br>
     </div>
           
-    <div class="container">        
         <div class="chat ui text container" id="chat"></div>
         <div class="history ui text container" id="history"></div>
-    </div>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="semantic/dist/semantic.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/moment-timezone-with-data-2010-2020.min.js"></script>    
     <script src="js/form.js"></script>
     <script src="js/chat.js"></script>
-    <script src="js/moment.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $("body").removeClass('hidden');
+        });
+    </script>
+    <script type="text/javascript">
+        $(function(){
+          setInterval(function(){ 
+            $('#timex').text(moment.tz('Europe/London').format('MMMM Do YYYY, h:mm:ss a'))
+          },1000);
         });
     </script>
 </body>

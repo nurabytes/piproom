@@ -25,7 +25,7 @@ $(function() {
 
     $messageForm.submit(function(e) {
         e.preventDefault();
-        socket.emit('send time', moment().format('MMMM Do YYYY, h:mm:ss a') );
+        socket.emit('send time', moment.tz('Europe/London').format('MMMM Do YYYY, h:mm:ss a') );
         socket.emit('send transaction', $transaction.val());
         socket.emit('send currency', $currency.val());
         socket.emit('send color', color);
@@ -69,7 +69,7 @@ $(function() {
     });
 
     socket.on('new stop', function(data) {
-        $(figs).append("&nbsp;&nbsp;&nbsp;&nbsp;STOP: " + data.msg + "</h3>" + "<h5 id='time'>" + moment().format('MMMM Do YYYY, h:mm:ss a') + "</h5></center>" + "</center>");
+        $(figs).append("&nbsp;&nbsp;&nbsp;&nbsp;STOP: " + data.msg + "</h3>" + "<h5 id='time'>" + moment.tz('Europe/London').format('MMMM Do YYYY, h:mm:ss a') + "</h5></center>" + "</center>");
         $("h3").removeAttr('id');
         $("div").removeAttr('id');
         $('#submit').prop("disabled", true);

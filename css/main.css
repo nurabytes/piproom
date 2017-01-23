@@ -3,20 +3,27 @@ body {
 }
 
 
-h4 {
-	padding-bottom:10px;
+#time {
+	padding-top:1rem;
 }
 
 .hidden {
 	display: none;
 }	
 
-#time {
-	padding-top: 15px;
-	padding-bottom:10px;
+.timex {
+	padding-bottom: 2rem;
 }
 
-#logout {
-	padding-bottom: 50px;
+.timex2 {
+	padding-bottom: 4rem;
+}
+
+.options {
+	padding-bottom: 6rem;
+}
+
+.logout {
+	padding-bottom: 3rem;
 }
 
